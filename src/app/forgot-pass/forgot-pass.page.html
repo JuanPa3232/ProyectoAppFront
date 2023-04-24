@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Recuperar contraseña</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Recupera tu cuenta</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="formularioForgPass">
+        <ion-item fill="outline" class="login">
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type = "email" placeholder="Ingresa tu Nombre"></ion-input>
+        </ion-item>
+        <br>
+        <ion-item fill="outline" class="login">
+          <ion-label position="floating">Nueva contraseña</ion-label>
+          <ion-input type="password" placeholder="Ingresa la nueva contraseña"></ion-input>
+        </ion-item>
+        <br>
+        <ion-item fill="outline" class="login">
+          <ion-label position="floating">Confirma la nueva contraseña</ion-label>
+          <ion-input type="password" placeholder="Ingresa de nuevo la nueva contraseña"></ion-input>
+        </ion-item>
+        <br>
+        <ion-button>
+          Restablecer cuenta  
+        </ion-button>
+      </form>
+      <br>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
