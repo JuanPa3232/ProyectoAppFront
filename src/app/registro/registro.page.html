@@ -8,62 +8,63 @@
 </ion-header>
 
 <ion-content>
-  <ion-card >
+  <ion-card>
     <ion-card-header>
       <ion-card-title class="ion-text-center">REGISTER</ion-card-title>
     </ion-card-header>
     <ion-card-content>
 
       <form [formGroup]="formularioRegistro">
-        
+
         <ion-item fill="outline" class="register">
-          <ion-label position="floating" color="light">Enter your username</ion-label>
-          <ion-input formControlName="usuario" type="text"></ion-input>
+          <ion-input formControlName="usuario" type="text" clear-input="true" required="true" [clearOnEdit]="true"
+            placeholder="Enter your username"></ion-input>
         </ion-item>
         <hr>
         <ion-item fill="outline" class="register">
-          <ion-label position="floating">Nombre</ion-label>
-          <ion-input formControlName="name" type="text" placeholder="José Maria"></ion-input>
+          <ion-input formControlName="name" type="text" clear-input="true" required="true" [clearOnEdit]="true"
+            placeholder="Enter your name"></ion-input>
         </ion-item>
         <hr>
         <ion-item fill="outline" class="register">
-          <ion-label position="floating">Apeidos</ion-label>
-          <ion-input formControlName="lastname" type="text" placeholder="Morelos"></ion-input>
-          <ion-icon name="people-circle-outline" slot="end"></ion-icon>
+          <ion-input formControlName="lastname" type="text" clear-input="true" required="true" [clearOnEdit]="true"
+            placeholder="Enter your lastname"></ion-input>
         </ion-item>
         <hr>
         <ion-item fill="outline" class="register">
-          <ion-label position="floating">Correo</ion-label>
-          <ion-input formControlName="email" type="email" placeholder="Ejemplo@gmail.com"></ion-input>
-          <ion-icon name="mail-outline" slot="end"></ion-icon>
+          <ion-input formControlName="email" type="email" clear-input="true" required="true" [clearOnEdit]="true"
+            errorText="invalid email or in use" placeholder="Enter your e-mail"></ion-input>
         </ion-item>
         <hr>
         <ion-item fill="outline" class="register">
-          <ion-label position="floating">Télefono</ion-label>
-          <ion-input formControlName="phone" type="number" placeholder="3521579617"></ion-input>
-          <ion-icon name="call-outline" slot="end"></ion-icon>
+          <ion-input formControlName="password" type="password" clear-input="true" required="true" [clearOnEdit]="true"
+            placeholder="Enter your password"></ion-input>
         </ion-item>
         <hr>
         <ion-item fill="outline" class="register">
-          <ion-label position="floating">Edad</ion-label>
-          <ion-input formControlName="age" type="number" placeholder="Ejemplo:18"></ion-input>
-          <ion-icon name="hourglass-outline" slot="end"></ion-icon>
+          <ion-input formControlName="phone" type="number" clear-input="true" required="true" [clearOnEdit]="true"
+            inputmode="numeric" pattern="[0-9]*" placeholder="Enter a phone number"></ion-input>
         </ion-item>
         <hr>
         <ion-item fill="outline" class="register">
-          <ion-label position="floating">¿Has usado lentes?¿Si o no?</ion-label>
-          <ion-input formControlName="used" type="text" placeholder="Si/no"></ion-input>
-          <ion-icon name="glasses-outline" slot="end"></ion-icon>
+          <ion-input formControlName="age" type="number" clear-input="true" required="true" [clearOnEdit]="true"
+            inputmode="numeric" pattern="[0-9]*" placeholder="Your age"></ion-input>
         </ion-item>
         <hr>
         <ion-item fill="outline" class="register">
-          <ion-label position="floating">Introduce tu Contraseña</ion-label>
-          <ion-input formControlName="password" type="password"></ion-input>
-          <ion-icon name="key-outline" slot="end"></ion-icon>
+          <ion-input formControlName="used" type="text" clear-input="true" required="true"
+            [clearOnEdit]="true" placeHolder="Have your ever used glasses? Yes/No"></ion-input>
         </ion-item>
         <hr>
-        <ion-button (click)="doSave()">
-          Registrar cuenta
+        <ion-button [disabled]="!formularioRegistro.valid" type="submit" (click)="doSave()">
+          Register account
+        </ion-button>
+        <br>
+        <br>
+        <ion-text color="light">Already have an account?</ion-text>
+        <br>
+        <ion-button routerLink="/login">
+          Sign In
         </ion-button>
       </form>
       <br>

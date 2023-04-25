@@ -1,42 +1,84 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder
-} from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { UserService } from '../shared/services/user.service';
+import { LoadingController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  providers: []
 })
 export class LoginPage implements OnInit {
-
-  formularioLogin: FormGroup;
-  name!: string;
+  formularioLogin!: FormGroup;
+  loginAttempts: number = 0;
+  showRecoverPasswordOption: boolean = false;
+  
   constructor(
-     public fb: FormBuilder,
-     public alertController: AlertController,
-     private http: HttpClient) {
-
-    this.formularioLogin = this.fb.group({
-      'nombre': new FormControl("",Validators.required),
-      'password': new FormControl("",Validators.required)
-
-    })
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private loadingCtrl: LoadingController,
+    private alertController: AlertController,
+    private router: Router) {
   }
 
   ngOnInit() {
-    this.http.get<{name: string}>('/users').subscribe(data => { this.name = data.name;
+    this.formularioLogin = this.formBuilder.group({
+      'email': [null, Validators.compose([
+        Validators.required
+      ])],
+      'password': [null, Validators.compose([
+        Validators.required
+      ])]
+    });
+  }
+  
+  doCheck() {
+    this.showLoading();
+    
+    this.userService.loginUser(this.formularioLogin.value).subscribe((data: any) => {
+      this.loadingCtrl.dismiss();
+      if (Object.is(data, null)) {
+        this.presentAlert();
+        console.log("El correo o la contraseña son incorrectos")
+        if (this.loginAttempts >= 2) {
+          this.showRecoverPasswordOption = true;
+        } else {
+          this.loginAttempts++;
+        }
+      } 
+      else {
+        setTimeout(() => {
+          this.router.navigate(['/home']);// Redirige a la página /home
+        }, 2000); // Espera 2 segundos (2000 milisegundos) antes de redirigir
+        
+      }
+      this.formularioLogin.reset();
     });
   }
 
-  
-    
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Cargando informacion, espere...',
+      //duration: 2000,
 
+    });
 
+    return await loading.present();
   }
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Error',
+      subHeader: 'Correo o constraseña invalidos',
+      message: 'Ingrese los datos nuevamente',
+      buttons: ['OK'],
+    });
+
+    await alert.present();
+  }
+
+}
+
 

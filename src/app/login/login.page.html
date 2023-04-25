@@ -1,38 +1,32 @@
 <ion-header>
-  <ion-toolbar color="medium">
-    <ion-title> Home</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="background">
-
-  <ion-card-header>
-    <ion-card-title>Ingresa con tu cuenta</ion-card-title>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+    <ion-card-title class="ion-text-center">Ingresa con tu cuenta</ion-card-title>
   </ion-card-header>
+  <ion-card-content>
 
-  <ion-card class="imagen">
-    <img src="assets\img\icono.png"/>
-  </ion-card>
-  <ion-card class="opacity">
-    <ion-card-content>
-      <form [formGroup]="formularioLogin">
-        <ion-item fill="outline" class="login">
-          <ion-label position="floating">Nombre de usuario</ion-label>
-          <ion-input placeholder="Ingresa tu Nombre"></ion-input>
-        </ion-item>
-        <br>
-        <ion-item fill="outline" class="login">
-          <ion-label position="floating">Contraseña</ion-label>
-          <ion-input type="password" placeholder="Ingresa la contraseña"></ion-input>
-        </ion-item>
-        <ion-item class="login">
-          <ion-button fill="clear" routerLink="/forgot-pass">¿Olvidaste tu contraseña?
-          </ion-button>
-        </ion-item>
-      </form>
+    <form [formGroup]="formularioLogin">
+      <ion-item fill="outline" class="login">
+        <ion-input placeholder="Ingresa tu correo" formControlName="email" type="email"></ion-input>
+      </ion-item>
       <br>
-
-      <ion-button>
+      <ion-item fill="outline" class="login">
+        <ion-input type="password" placeholder="Ingresa la contraseña" formControlName="password"
+          type="password"></ion-input>
+      </ion-item>
+        <ion-text class="subrayado" *ngIf="showRecoverPasswordOption" routerLink="/forgot-pass" tappable >¿Olvidaste tu contraseña?</ion-text>
+      <br>
+      <br>
+      <ion-button [disabled]="!formularioLogin.valid" (click)="doCheck()" tappable>
         Ingresar
       </ion-button>
       <br>
@@ -42,6 +36,7 @@
       <ion-button routerLink="/registro">
         Registrate
       </ion-button>
-    </ion-card-content>
+    </form>
+  </ion-card-content>
   </ion-card>
 </ion-content>

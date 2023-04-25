@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Recuperar contraseña</ion-title>
+    <ion-title>Password Recovery</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,12 +12,11 @@
     <ion-card-header>
       <ion-card-title>Recupera tu cuenta</ion-card-title>
     </ion-card-header>
-
     <ion-card-content>
+
       <form [formGroup]="formularioForgPass">
         <ion-item fill="outline" class="login">
-          <ion-label position="floating">Email</ion-label>
-          <ion-input type = "email" placeholder="Ingresa tu Nombre"></ion-input>
+          <ion-input type="email" formControlName="email" placeholder="Ingresa tu Nombre"></ion-input>
         </ion-item>
         <br>
         <ion-item fill="outline" class="login">
@@ -31,7 +30,7 @@
         </ion-item>
         <br>
         <ion-button>
-          Restablecer cuenta  
+          Restablecer cuenta
         </ion-button>
       </form>
       <br>

@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder
-} from '@angular/forms';
+import { FormGroup, Validators, FormBuilder} from '@angular/forms';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'app-forgot-pass',
@@ -12,18 +8,21 @@ import {
   styleUrls: ['./forgot-pass.page.scss'],
 })
 export class ForgotPassPage implements OnInit {
+  formularioForgPass!: FormGroup;
 
-  formularioForgPass: FormGroup;
-
-  constructor(public fb: FormBuilder) { 
-    this.formularioForgPass = this.fb.group({
-      'confirmaremail': new FormControl("",Validators.required),
-      'passwordnueva': new FormControl("",Validators.required),
-      'confirmarpasswordnueva': new FormControl("",Validators.required)
-    })
-  }
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService:UserService){
+    }
+  
 
   ngOnInit() {
+    this.formularioForgPass = this.formBuilder.group({
+      'email': [null, Validators.compose([
+        Validators.required
+      ])]
+      });
+
   }
 
 }
