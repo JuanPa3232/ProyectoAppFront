@@ -29,7 +29,7 @@ export class RegistroPage implements OnInit {
         'lastname': [null, Validators.compose([
           Validators.required
         ])],
-        'usuario': [null, Validators.compose([
+        'username': [null, Validators.compose([
           Validators.required
         ])],
         'email': [null, Validators.compose([
@@ -59,7 +59,7 @@ export class RegistroPage implements OnInit {
         this.loadingCtrl.dismiss();
         setTimeout(() => {
           this.router.navigate(['/login']);// Redirige a la página /home
-        }, 3000); // Espera 2 segundos (2000 milisegundos) antes de redirigir
+        }, 2000); // Espera 2 segundos (2000 milisegundos) antes de redirigir
         this.formularioRegistro.reset();
       })
     }
