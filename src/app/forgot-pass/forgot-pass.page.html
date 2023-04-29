@@ -16,20 +16,10 @@
 
       <form [formGroup]="formularioForgPass">
         <ion-item fill="outline" class="login">
-          <ion-input type="email" formControlName="email" placeholder="Ingresa tu Nombre"></ion-input>
+          <ion-input type="email" formControlName="email" placeholder="Enter your email account"></ion-input>
         </ion-item>
         <br>
-        <ion-item fill="outline" class="login">
-          <ion-label position="floating">Nueva contraseña</ion-label>
-          <ion-input type="password" placeholder="Ingresa la nueva contraseña"></ion-input>
-        </ion-item>
-        <br>
-        <ion-item fill="outline" class="login">
-          <ion-label position="floating">Confirma la nueva contraseña</ion-label>
-          <ion-input type="password" placeholder="Ingresa de nuevo la nueva contraseña"></ion-input>
-        </ion-item>
-        <br>
-        <ion-button>
+        <ion-button [disabled]="!formularioForgPass.valid" (click)="doSend()">
           Restablecer cuenta
         </ion-button>
       </form>

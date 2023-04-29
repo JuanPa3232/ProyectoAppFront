@@ -37,8 +37,9 @@
         </ion-item>
         <hr>
         <ion-item fill="outline" class="register">
-          <ion-input formControlName="password" type="password" clear-input="true" required="true" [clearOnEdit]="true"
+          <ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="password" clear-input="true" required="true" [clearOnEdit]="true"
             placeholder="Enter your password"></ion-input>
+            <ion-icon slot="end" [name]="showPassword ? 'eye-off' : 'eye'" (click)="showPassword = !showPassword"></ion-icon>
         </ion-item>
         <hr>
         <ion-item fill="outline" class="register">

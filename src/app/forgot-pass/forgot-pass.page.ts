@@ -23,6 +23,16 @@ export class ForgotPassPage implements OnInit {
       ])]
       });
 
+
+  }
+  doSend(){
+    this.userService.recoverPass(this.formularioForgPass.value).subscribe((data: any)=>{
+      if (Object.is(data,null)) {
+        window.alert("El correo no esta registrado en esta pagina")
+      } else {
+        window.alert("Contraseñana enviada por email")
+      }
+    })
   }
 
 }
