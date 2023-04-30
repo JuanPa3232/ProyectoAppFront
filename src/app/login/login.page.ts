@@ -15,6 +15,7 @@ export class LoginPage implements OnInit {
   formularioLogin!: FormGroup;
   loginAttempts: number = 0;
   showRecoverPasswordOption: boolean = false;
+  showPassword= false;
   
   constructor(
     private formBuilder: FormBuilder,

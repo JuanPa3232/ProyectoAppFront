@@ -1,12 +1,12 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
+<p class="eslogan">Mejorar tu vision es nuestra mision</p>
 <ion-content>
   <ion-card>
     <ion-card-header>
@@ -16,12 +16,12 @@
 
     <form [formGroup]="formularioLogin">
       <ion-item fill="outline" class="login">
-        <ion-input placeholder="Ingresa tu correo" formControlName="email" type="email"></ion-input>
+        <ion-input placeholder="Ingresa tu correo" formControlName="email" type="email" clear-input="true"></ion-input>
       </ion-item>
       <br>
       <ion-item fill="outline" class="login">
-        <ion-input type="password" placeholder="Ingresa la contraseña" formControlName="password"
-          type="password"></ion-input>
+        <ion-input type="{{showPassword ? 'text' : 'password'}}" clear-input="true" placeholder="Ingresa la contraseña" formControlName="password"></ion-input>
+        <ion-icon slot="end" [name]="showPassword ? 'eye-off' : 'eye'" (click)="showPassword = !showPassword"></ion-icon>
       </ion-item>
         <ion-text class="subrayado" *ngIf="showRecoverPasswordOption" routerLink="/forgot-pass" tappable >¿Olvidaste tu contraseña?</ion-text>
       <br>
