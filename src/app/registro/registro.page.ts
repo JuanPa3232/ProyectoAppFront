@@ -3,6 +3,8 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { UserService } from '../shared/services/user.service';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-registro',
@@ -13,14 +15,17 @@ import { Router } from '@angular/router';
 export class RegistroPage implements OnInit {
 
   showPassword = false;
-  
+  showDatePicker = false;
+
+
   formularioRegistro!: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
     private loadingCtrl: LoadingController,
     private router: Router,
-    private alertController: AlertController) {
+    private alertController: AlertController,
+    private menuController: MenuController) {
 
   }
   ngOnInit(): void {
@@ -38,7 +43,7 @@ export class RegistroPage implements OnInit {
       'email': [null, Validators.compose([
         Validators.required
       ])],
-      'used': [null, Validators.compose([
+      'birth': [null, Validators.compose([
         Validators.required
       ])]
       ,
@@ -55,7 +60,7 @@ export class RegistroPage implements OnInit {
   }
 
   doSave() {
-    
+
     console.log(this.formularioRegistro.value)
 
     if (!this.isValidEmail(this.formularioRegistro.value.email)) {
@@ -102,5 +107,8 @@ export class RegistroPage implements OnInit {
     await alert.present();
   }
 
+  cerrarMenu() {
+    this.menuController.close('end'); // 'end' es el lado del menú a cerrar
+  }
 
 }

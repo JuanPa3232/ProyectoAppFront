@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { UserService } from '../shared/services/user.service';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, MenuController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -22,7 +22,8 @@ export class LoginPage implements OnInit {
     private userService: UserService,
     private loadingCtrl: LoadingController,
     private alertController: AlertController,
-    private router: Router) {
+    private router: Router,
+    private menuController: MenuController) {
   }
 
   ngOnInit() {
@@ -80,6 +81,9 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
+  cerrarMenu() {
+    this.menuController.close('end'); // 'end' es el lado del menú a cerrar
+  }
 }
 
 
