@@ -1,10 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { UserService } from '../shared/services/user.service';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, IonDatetime, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
-
+import { PhotosService } from 'src/app/shared/services/photos.service';
 
 @Component({
   selector: 'app-registro',
@@ -16,6 +16,8 @@ export class RegistroPage implements OnInit {
 
   showPassword = false;
   showDatePicker = false;
+  photos: String[] = [];
+  
 
 
   formularioRegistro!: FormGroup;
@@ -25,7 +27,9 @@ export class RegistroPage implements OnInit {
     private loadingCtrl: LoadingController,
     private router: Router,
     private alertController: AlertController,
-    private menuController: MenuController) {
+    private menuController: MenuController,
+    private photosService: PhotosService) {
+    this.photos = this.photosService.photos;
 
   }
   ngOnInit(): void {
@@ -110,5 +114,12 @@ export class RegistroPage implements OnInit {
   cerrarMenu() {
     this.menuController.close('end'); // 'end' es el lado del menú a cerrar
   }
-
+  async takePhoto(){
+    
+    await this.photosService.addNewPhoto();
+  }
+  
 }
+
+
+
