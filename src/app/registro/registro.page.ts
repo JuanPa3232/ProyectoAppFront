@@ -1,10 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { UserService } from '../shared/services/user.service';
-import { AlertController, IonDatetime, LoadingController } from '@ionic/angular';
+import { AlertController, IonDatetime, LoadingController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
-import { PhotosService } from 'src/app/shared/services/photos.service';
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+
+const IMAGE_DIR = 'stored-images'
 
 @Component({
   selector: 'app-registro',
@@ -13,6 +16,7 @@ import { PhotosService } from 'src/app/shared/services/photos.service';
   providers: []
 })
 export class RegistroPage implements OnInit {
+  
 
   showPassword = false;
   showDatePicker = false;
@@ -28,8 +32,8 @@ export class RegistroPage implements OnInit {
     private router: Router,
     private alertController: AlertController,
     private menuController: MenuController,
-    private photosService: PhotosService) {
-    this.photos = this.photosService.photos;
+    private plt: Platform,) {
+    
 
   }
   ngOnInit(): void {
@@ -59,10 +63,12 @@ export class RegistroPage implements OnInit {
       ])],
       'password': [null, Validators.compose([
         Validators.required
-      ])]
+      ])],
+      
     });
-  }
 
+  }
+  
   doSave() {
 
     console.log(this.formularioRegistro.value)
@@ -114,10 +120,64 @@ export class RegistroPage implements OnInit {
   cerrarMenu() {
     this.menuController.close('end'); // 'end' es el lado del menú a cerrar
   }
-  async takePhoto(){
+  async addNewPhoto(){
+    const photo = await Camera.getPhoto({
+      resultType:CameraResultType.Uri,
+      source:CameraSource.Camera,
+      quality:100
+    });
     
-    await this.photosService.addNewPhoto();
+    if (photo.webPath) {
+      this.photos.shift();
+      this.photos.unshift(photo.webPath);
+
+    }
+    if (photo) {
+      this.saveImage(photo)
+    }
   }
+    // Create a new file from a capture image
+    async saveImage(photo: Photo) {
+      const base64Data = await this.readAsBase64(photo);
+  
+      const fileName = new Date().getTime() + '.jpeg';
+      const savedFile = await Filesystem.writeFile({
+        path: `${IMAGE_DIR}/${fileName}`,
+        data: base64Data,
+        directory: Directory.Data,
+        
+      });
+      console.log(fileName);
+  
+    }
+  
+    // https://ionicframework.com/docs/angular/your-first-app/3-saving-photos
+    private async readAsBase64(photo: Photo) {
+      if (this.plt.is('hybrid')) {
+        const file = await Filesystem.readFile({
+          path: photo.path || ''
+        });
+  
+        return file.data;
+      }
+      else {
+        // Fetch the photo, read as a blob, then convert to base64 format
+        const response = await fetch(photo.webPath || '');
+        const blob = await response.blob();
+  
+        return await this.convertBlobToBase64(blob) as string;
+      }
+    }
+  
+    // Helper function
+    convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
+      const reader = new FileReader;
+      reader.onerror = reject;
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+      reader.readAsDataURL(blob);
+    });
   
 }
 

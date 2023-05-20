@@ -16,9 +16,12 @@ export class PhotosService {
       source:CameraSource.Camera,
       quality:100
     });
+    
     if (photo.webPath) {
+      this.photos.shift();
       this.photos.unshift(photo.webPath);
     }
+    
   }
 
 }

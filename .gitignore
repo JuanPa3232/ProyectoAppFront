@@ -18,8 +18,7 @@ log.txt
 /coverage
 
 # Ionic
-/.ionic
-/www
+/.ionicionic
 /platforms
 /plugins
 
